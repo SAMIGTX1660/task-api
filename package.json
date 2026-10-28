@@ -1,5 +1,9 @@
 {
+  "scripts": {
+    "start": "node Hello_server.js"
+  },
   "dependencies": {
-    "express": "^5.3.0"
+    "express": "^5.3.0",
+    "swagger-ui-express": "^5.0.1"
   }
 }
