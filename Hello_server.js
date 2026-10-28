@@ -50,3 +50,44 @@ app.post('/tasks', (req, res) => {
 
   res.status(201).json(task);
 });
+
+app.put('/tasks/:id', (req, res) => {
+  const task = tasks.find(t => t.id === Number(req.params.id));
+  if (!task) {
+    return res.status(404).json({ error: `Task ${req.params.id} not found` });
+  }
+
+  const body = req.body;
+  if (!body || typeof body !== 'object' || Array.isArray(body)) {
+    return res.status(400).json({ error: 'Request body must include title or done' });
+  }
+
+  const fields = Object.keys(body);
+  if (
+    fields.length === 0 ||
+    fields.some(field => field !== 'title' && field !== 'done') ||
+    ('title' in body && (typeof body.title !== 'string' || body.title.trim() === '')) ||
+    ('done' in body && typeof body.done !== 'boolean')
+  ) {
+    return res.status(400).json({ error: 'Request body must include a valid title or done value' });
+  }
+
+  if ('title' in body) {
+    task.title = body.title.trim();
+  }
+  if ('done' in body) {
+    task.done = body.done;
+  }
+
+  res.json(task);
+});
+
+app.delete('/tasks/:id', (req, res) => {
+  const taskIndex = tasks.findIndex(t => t.id === Number(req.params.id));
+  if (taskIndex === -1) {
+    return res.status(404).json({ error: `Task ${req.params.id} not found` });
+  }
+
+  tasks.splice(taskIndex, 1);
+  res.status(204).end();
+});
