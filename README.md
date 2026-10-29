@@ -53,11 +53,24 @@ The app runs on:
 ## Example output
 
 ```bash
-curl http://localhost:3000/health
-```
-
-```json
-{"status":"ok"}
+StatusCode        : 200                                                                                              
+StatusDescription : OK
+Content           : {"status":"ok"}
+RawContent        : HTTP/1.1 200 OK
+                    Connection: keep-alive
+                    Keep-Alive: timeout=5
+                    Content-Length: 15
+                    Content-Type: application/json; charset=utf-8
+                    Date: Thu, 29 Oct 2026 14:18:19 GMT
+                    ETag: W/"f-VaSQ4oDUiZblZNAEkkN+s...
+Forms             : {}
+Headers           : {[Connection, keep-alive], [Keep-Alive, timeout=5], [Content-Length, 15], [Content-Type, 
+                    application/json; charset=utf-8]...}
+Images            : {}
+InputFields       : {}
+Links             : {}
+ParsedHtml        : System.__ComObject
+RawContentLength  : 15
 ```
 
 ## Swagger UI
