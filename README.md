@@ -51,7 +51,9 @@ The app runs on:
 | DELETE | /tasks/:id | Delete a task | 204 | 404 |
 
 ## Example output
-
+```bash
+curl.exe -i http://localhost:3000/health
+```
 ```bash
 HTTP/1.1 200 OK
 X-Powered-By: Express
@@ -61,8 +63,21 @@ ETag: W/"f-VaSQ4oDUiZblZNAEkkN+sX+q3Sg"
 Date: Thu, 29 Oct 2026 14:19:24 GMT
 Connection: keep-alive
 Keep-Alive: timeout=5
-
 {"status":"ok"}
+```
+```bash
+curl.exe -i http://localhost:3000/tasks/99
+```
+```bash
+HTTP/1.1 404 Not Found
+X-Powered-By: Express
+Content-Type: application/json; charset=utf-8
+Content-Length: 29
+ETag: W/"1d-kQQdPQ+i/Wk9IgXh55Kh5auGltk"
+Date: Thu, 29 Oct 2026 14:20:32 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+{"error":"Task 99 not found"}
 ```
 
 ## Swagger UI
