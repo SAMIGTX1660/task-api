@@ -1,15 +1,11 @@
-let tasks=[
-  {id:1, title:"Task 1", done:false},
-   {id:2, title:"Task 2", done:true}, 
-   {id:3, title:"Task 3", done:false}
- ]
-
-const express = require('express');
-const swaggerUi = require('swagger-ui-express');
-const openapiSpec = require('./openapi.json');
+import express from 'express';
+import swaggerUi from 'swagger-ui-express';
+import openapiSpec from './openapi.json' with { type: 'json' };
 const app = express();
 app.use(express.json());
 const port = 3000;
+import db from './db.js';
+const tasks = db.prepare('SELECT * FROM tasks').all();
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(openapiSpec));
 
