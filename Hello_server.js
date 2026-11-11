@@ -10,11 +10,10 @@ const tasks = db.prepare('SELECT * FROM tasks').all();
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(openapiSpec));
 
 app.get('/', (req, res) => {
-  res.json({
-    "name": "Task API", 
-    "version": "1.0", 
-    "endpoints": ["/tasks"]});
+  const tasks = db.prepare('SELECT * FROM tasks').all();
+  res.json(tasks);
 });
+
 app.get('/health', (req, res) => {
   res.json({"status": "ok"});
 });
@@ -24,11 +23,12 @@ app.listen(port, () => {
 });
 
 app.get('/tasks', (req, res) => {
+  const tasks = db.prepare('SELECT * FROM tasks').all();
   res.json(tasks);
 });
 
 app.get('/tasks/:id', (req, res) => {
-  const task = tasks.find(t => t.id === parseInt(req.params.id)); //req.params.id is the id value taken from the URL
+  const task = db.prepare('SELECT * FROM tasks WHERE id = ?').get(req.params.id);
   if (!task) {
     return res.status(404).json({"error": `Task ${req.params.id} not found`});
   }
