@@ -38,16 +38,12 @@ app.get('/tasks/:id', (req, res) => {
 let nextId = 4;
 
 app.post('/tasks', (req, res) => {
-  const title = req.body && req.body.title;
-
+  const { title } = req.body;
   if (typeof title !== 'string' || title.trim() === '') {
     return res.status(400).json({ error: 'Task title is required' });
   }
-
-  const task = { id: nextId, title: title.trim(), done: false };
-  nextId = nextId + 1;
-  tasks.push(task);
-
+  const result = db.prepare('INSERT INTO tasks (title, done) VALUES (?, ?)').run(title.trim(), 0);
+  const task = db.prepare('SELECT * FROM tasks WHERE id = ?').get(result.lastInsertRowid);
   res.status(201).json(task);
 });
 
